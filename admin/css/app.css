@@ -1,0 +1,17 @@
+.is-hidden {
+    display: none;
+}
+.is-center {
+    text-align: center;
+}
+
+.is-green {
+    color: green !important;
+}
+
+.is-red {
+    color: red !important;
+}
+.is-right  {
+    text-align: right;
+}
