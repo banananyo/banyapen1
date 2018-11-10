@@ -15,7 +15,7 @@
         <div class="row">
           <p style="color:white">บ้านยาเป็นหนึ่งได้ยืนยันการสั่งซื้อ และจัดส่งสินค้าแล้ว</p>
           <p style="color:white">รหัสการสั่งซื้อ: %orders_ref%</p>
-          <p style="color:white">หมายเลขการจัดส่ง: %sending_ref%</p>
+          <p style="color:white">หมายเลขการจัดส่ง (EMS): %sending_ref%</p>
           <p style="color:white">ที่อยู่ในการจัดส่ง: %sending_address%</p>
           <p style="color:white">ชื่อผู้รับ: %reciever_name%</p>
           <p style="color:white">อีเมลผู้รับ: %reciever_email%</p>

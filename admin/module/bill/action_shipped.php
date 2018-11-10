@@ -25,13 +25,12 @@ $get = $_GET;
         //     $datatest->email = $bill['email'];
         //     $datatest->customer_name = $bill['name'];
         //     $datatest->orders_ref = $bill['orders_ref'];
-        //     $datatest->total_transfer = number_format($bill['price']);
-        //     $datatest->bank_account = json_decode($bill['bank'])->bank." - (".json_decode($bill['bank'])->number.")";
-        //     sendMail($datatest, 'payment_confirm');
+        //     $datatest->ems = $bill['orders_ref'];
+        //     sendMail($datatest, 'shipped');
         //     $id = $ordersRef;
-        //     echo "<span class='is-green'>ยืนยันการชำระเงินให้กับบิลหมายเลข $id แล้ว</span>";
+        //     echo "<span class='is-green'>ยืนยันการจัดส่งให้กับบิลหมายเลข $id แล้ว</span>";
         // }else {
-        //     echo "<span class='is-red'>ยืนยันการชำระเงินให้กับบิลหมายเลข $id ไม่สำเร็จ</span>";
+        //     echo "<span class='is-red'>ยืนยันการจัดส่งให้กับบิลหมายเลข $id ไม่สำเร็จ</span>";
         // }
 
     }else {

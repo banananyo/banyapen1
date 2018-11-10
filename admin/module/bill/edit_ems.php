@@ -154,7 +154,7 @@
                                         </tr>
                                     <tbody>
                                     </table>');
-                                    $datatest->sending_ref = $bill['orders_ref'];
+                                    $datatest->sending_ref = $ems;
                                     $datatest->sending_address = $bill['address'];
                                     $datatest->reciever_name = $bill['reciever_name'];
                                     $datatest->reciever_email = $bill['email'];

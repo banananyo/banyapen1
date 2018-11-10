@@ -159,7 +159,7 @@
                                 ?>
                                 </td>
                                 <td>
-                                    <?php if($value['status'] == 'WFT') {?>
+                                    <?php if($value['status'] == 'WFT' || $value['status'] == 'WFC') {?>
                                         <a href="index.php?module=bill&mode=action_wait_for_ship&id=<?php echo $value['id'] ?>"  class="btn btn-success btn-xs ">&#10004;</a> 
                                         <a href="index.php?module=bill&mode=action_reject&id=<?php echo $value['id'] ?>" class="btn btn-danger btn-xs ">&#10006;</a> 
                                     <?php } ?>

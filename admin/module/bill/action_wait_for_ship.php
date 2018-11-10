@@ -87,16 +87,16 @@
                             $result = $conn->query($sql);
                             
                             if($result) {
-                                // $path = str_replace("/admin","/",getcwd());
-                                // require($path.'sendmail.php');
-                                // $datatest = new stdClass();
-                                // $datatest->email = $bill['email'];
-                                // $datatest->customer_name = $bill['name'];
-                                // $datatest->orders_ref = $bill['orders_ref'];
-                                // $datatest->total_transfer = number_format($bill['price']);
-                                // $datatest->bank_account = json_decode($bill['bank'])->bank." - (".json_decode($bill['bank'])->number.")";
-                                // sendMail($datatest, 'payment_confirm');
-                                // $id = $ordersRef;
+                                $path = str_replace("/admin","/",getcwd());
+                                require($path.'sendmail.php');
+                                $datatest = new stdClass();
+                                $datatest->email = $bill['email'];
+                                $datatest->customer_name = $bill['name'];
+                                $datatest->orders_ref = $bill['orders_ref'];
+                                $datatest->total_transfer = number_format($bill['price']);
+                                $datatest->bank_account = json_decode($bill['bank'])->bank." - (".json_decode($bill['bank'])->number.")";
+                                sendMail($datatest, 'payment_confirm');
+                                $id = $ordersRef;
                                 echo "<span class='is-green'>เปลี่ยนสถานะเป็น `รอการจัดส่ง` ให้ $id แล้ว</span>";
                             }else {
                                 echo "<span class='is-red'>เปลี่ยนสถานะเป็น `รอการจัดส่ง` ให้ $id ไม่สำเร็จ</span>";

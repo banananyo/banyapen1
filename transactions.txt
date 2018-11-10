@@ -1,0 +1,7 @@
+WFT
+if payment report
+WFC
+if confirm
+WFS
+if shipped
+SHP
