@@ -465,9 +465,10 @@ footer .tel{font-size: 45px;}
 	
   }
   @media (min-width: 768px) {
-  .head_r {
-		display: block !important;
-  }
+        .head_r {
+                display: block !important;
+        }
+    }
 }
 @media(max-width:360px){
     .navbar-brand > img{width: 70%;padding-top: 5px;}
@@ -524,4 +525,25 @@ footer .tel{font-size: 45px;}
 }
 @media (min-width:1200px) {
     
+}
+.product-pre-desc {
+    padding: 0px 10px;
+}
+.sdescription {
+    width: 100%; 
+    color:#666; 
+    padding-top:0px; 
+    overflow: hidden; 
+}
+.quickbuy {
+    margin-bottom: 4px;
+}
+
+.quickbuy button {
+    width: 100%;
+    font-size: 120%;
+}
+
+.hilighted-text {
+    color: rgb(60,60,240);
 }

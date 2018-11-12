@@ -113,7 +113,8 @@
                         <textarea type="text" name="description" class="form-control" id="description" placeholder="รายละเอียด" ng-model="controller.field.description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>รูป</label>
+                        <label>รูป</label><br/>
+                        <label>(คำแนะนำ ภาพควรมีขนาดกว้าง-ยาวเท่ากัน และไม่เกิน 800px | พื้นที่ไม่เกิน 2MB)</label>
                         <input type="file" accept="image/*" app-filereader name="image" id="image" ng-model="controller.field.image">
                     </div>
                     <button type="submit" ng-disabled="controller.check() == false" class="btn btn-default">ตกลง</button>

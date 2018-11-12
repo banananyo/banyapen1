@@ -143,29 +143,47 @@
 				<div class="row">
 					<!-- prod -->
 					<?php 
-					while($row = $resProd->fetch_assoc()){
-						echo
-						'<div class="col-xs-12 col-sm-4 col-md-4">
+					while($row = $resProd->fetch_assoc()){ ?>
+						
+						<div class="col-xs-12 col-sm-4 col-md-4">
 							<div class="frame">
-								<figure><a href="product_detail.php?prodId='.$row['id'].'"><img src="admin/uploads/'.$row['image'].'" class="img-responsive img-prod-thumb"></a></figure>
-								<table width="100%" border="0" cellspacing="0" cellpadding="0">
-									<tr>
-									<td style="height:45px;"><h2><font style="font-size:22px;">'.($row['stock']<1 ? '<span class="badge badge-danger">หมด</span> ':'').$row['name'].'</font></h2></td>
-									</tr>
-								</table>
-								
-								<p style="color:#666; padding-top:0px; overflow: hidden; height: 40px;">'.$row['sdescription'].'</p>
-								
-								<div class="read-more"><a href="product_detail.php?prodId='.$row['id'].'">รายละเอียดเพิ่มเติม <i class="fa fa-arrow-circle-o-right f-14"></i></a></div>
+								<figure>
+									<a href="product_detail.php?prodId=<?php echo $row['id']; ?>">
+										<img src="admin/uploads/<?php echo $row['image']; ?>" class="img-responsive img-prod-thumb">
+									</a>
+								</figure>
+								<div class="product-pre-desc">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td style="height:45px;">
+												<label style="font-size:22px;"><?php echo ($row['stock']<1 ? '<span class="badge badge-danger">หมด</span> ':'').$row['name']; ?></label>
+											</td>
+										</tr>
+									</table>
+									
+									<label class="sdescription"><?php echo $row['sdescription']; ?></label>
+									<form action="cart.php" method="post" class="quickbuy">
+										<input type="hidden" name="prod_id" value="<?php echo $row['id']; ?>" />
+										<input type="hidden" name="add_to_cart" value="" />
+										<button class="btn btn-success" type="submit">
+											<?php echo $row['price']; ?> &#3647;
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+										</button>
+									</form>
+								</div>
+								<div class="read-more">
+									<a href="product_detail.php?prodId=<?php echo $row['id']; ?>">
+										รายละเอียดเพิ่มเติม <i class="fa fa-arrow-circle-o-right f-14"></i>
+									</a>
+								</div>
 							</div>
-						</div>';
-					}
-					if(mysqli_num_rows($resProd) == 0) {
-						echo 
-						'<div class="col-md-12">
+						</div>
+					<?php }
+					if(mysqli_num_rows($resProd) == 0) { ?>
+						<div class="col-md-12">
 							<div class="col-sm-12 search-text-title">ไม่พบสินค้าตามที่ค้นหา</div>
-						</div>';
-					}
+						</div>
+					<?php }
 					$conn->close();
 					?>
 					<!-- End prod-->
