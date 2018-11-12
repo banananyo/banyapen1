@@ -87,7 +87,7 @@
                                     }
                                 }
                             } else {
-                                echo '<script>console.log("'.$_POST.'");</script>';
+                                print_r($_POST);
                             }
 
                             $cartShowQuery = $conn->query("SELECT * FROM `cart` WHERE `member_id`=".$_SESSION['login_user']['id']);

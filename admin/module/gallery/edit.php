@@ -94,7 +94,8 @@
                         <input type="text" name="order" class="form-control" id="order" placeholder="ลำดับรูป" ng-model="controller.field.order">
                     </div>
                     <div class="form-group">
-                        <label>รูป</label><br />
+                        <label>รูป</label><br/>
+                        <label>(คำแนะนำ ควรใช้รูปภาพ กว้าง 960px * ยาว 320px | นามสกุล .jpg | พื้นที่ไม่เกิน 2MB)</label>
                         <img ng-src="uploads/{{controller.field.image}}" class="img-responsive" alt=""><br />
                         <input type="file" accept="image/*" app-filereader name="image" id="image" ng-model="controller.field.image">
 

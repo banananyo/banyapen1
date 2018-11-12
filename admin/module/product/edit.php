@@ -133,6 +133,7 @@
                     </div>
                     <div class="form-group">
                         <label>รูป</label><br />
+                        <label>(คำแนะนำ ภาพควรมีขนาดกว้าง-ยาวเท่ากัน และไม่เกิน 800px | พื้นที่ไม่เกิน 2MB)</label>
                         <img ng-src="uploads/{{controller.field.image}}" class="img-responsive" alt=""><br />
                         <input type="file" accept="image/*" app-filereader name="image" id="image" ng-model="controller.field.image">
 

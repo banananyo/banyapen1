@@ -80,7 +80,8 @@
                     </div>
                    
                     <div class="form-group">
-                        <label>รูป</label>
+                        <label>รูป</label><br/>
+                        <label>(คำแนะนำ ควรใช้รูปภาพ กว้าง 960px * ยาว 320px | นามสกุล .jpg | พื้นที่ไม่เกิน 2MB)</label>
                         <input type="file" accept="image/*" app-filereader name="image" id="image" ng-model="controller.field.image">
                     </div>
                     <button type="submit" ng-disabled="controller.check() == false" class="btn btn-default">ตกลง</button>
