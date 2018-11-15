@@ -12,3 +12,7 @@ function encode_single_quote($str) {
 function decode_single_quote($str) {
     return str_replace("''","'",$str);
 }
+
+function add_slash_squote($str) {
+    return str_replace("'","\'",$str);
+}

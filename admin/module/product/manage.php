@@ -85,7 +85,7 @@
                             <td class="col-md-1 is-center">#</td>
                             <td class="col-md-2 is-center">รูป</td>
                             <td class="col-md-3 is-center">ชื่อ</td>
-                            <td class="col-md-3 is-center">รายละเอียด</td>
+                            <td class="col-md-3 is-center">บริษัท</td>
                             <td class="col-md-3 is-center">จัดการ</td>
                         </tr>
 

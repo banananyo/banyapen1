@@ -37,13 +37,13 @@
 		?>
 			<!-- Gal 1-->
 			<div class="col-xs-12 col-sm-12 col-md-12">
-				<div style="font-size:160%; color:#0c5d25;"><?php echo $row['name'].'  '.($row['stock']<1 ? '<span class="badge badge-danger">สินค้าหมด</span> ':''); ?></div>
+				<!-- <div style="font-size:160%; color:#0c5d25;"><?php echo $row['name'].'  '.($row['stock']<1 ? '<span class="badge badge-danger">สินค้าหมด</span> ':''); ?></div> -->
 				<div style="padding-top:25px; padding-bottom:25px; font-size: 120%" class="row">
 					<div class="col-lg-4"><img src="admin/uploads/<?php echo $row['image']; ?>" alt="" class="img-prod-detail img-fluid"/></div>
 					<div class="col-lg-8">
 						<div class="row">
 							<div class="col-lg-12">
-								<h3	style="border-bottom: 2px; border-color: rgb(100,100,100);">คำอธิบาย</h3>
+								<h3	style="border-bottom: 2px; border-color: rgb(100,100,100);">รายละเอียด</h3>
 								<?php echo $row['description']; ?>
 							</div>
 						</div>
@@ -51,9 +51,9 @@
 						<div class="row" >
 							<div class="col-lg-12">ราคา: <label class="hilighted-text"><?php echo $row['price']; ?> &#3647;</label></div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-lg-12">สินค้าในสต็อก: <label class="hilighted-text"><?php echo $row['stock']; ?> ชิ้น</label></div>
-						</div>
+						</div> -->
 						<form class="row" action="cart.php" method="post">
 							<div class="col-lg-12">
 								<input type="hidden" name="prod_id" value="<?php echo $row['id']; ?>" />
