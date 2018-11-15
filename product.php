@@ -156,20 +156,23 @@
 									<table width="100%" border="0" cellspacing="0" cellpadding="0">
 										<tr>
 											<td style="height:45px;">
-												<label style="font-size:22px;"><?php echo ($row['stock']<1 ? '<span class="badge badge-danger">หมด</span> ':'').$row['name']; ?></label>
+												<!-- <label style="font-size:140%;"><?php echo ($row['stock']<1 ? '<span class="badge badge-danger">หมด</span> ':'').$row['name']; ?></label> -->
+												<label style="font-size:140%;"><?php echo $row['name']; ?></label>
 											</td>
 										</tr>
 									</table>
 									
 									<label class="sdescription"><?php echo $row['sdescription']; ?></label>
-									<form action="cart.php" method="post" class="quickbuy">
-										<input type="hidden" name="prod_id" value="<?php echo $row['id']; ?>" />
-										<input type="hidden" name="add_to_cart" value="" />
-										<button class="btn btn-success" type="submit">
-											<?php echo $row['price']; ?> &#3647;
-											<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-										</button>
-									</form>
+									<div style="display: flex; width: 100%; justify-content: space-between;">
+										<p style="font-size: 120%; font-weight: bold; padding: 0; margin: 0"><?php echo $row['price']; ?> &#3647;</p>
+										<form action="cart.php" method="post" class="quickbuy">
+											<input type="hidden" name="prod_id" value="<?php echo $row['id']; ?>" />
+											<input type="hidden" name="add_to_cart" value="" />
+											<button class="btn btn-lg btn-success" type="submit">
+												<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+											</button>
+										</form>
+									</div>
 								</div>
 								<div class="read-more">
 									<a href="product_detail.php?prodId=<?php echo $row['id']; ?>">

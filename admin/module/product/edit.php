@@ -78,14 +78,17 @@
                     แก้ไขสินค้า - <?php echo $row['name'] ?>
                 </div>
                 <div class="panel-body">
-                <?php if(!isset($_POST['name']) && !isset($_POST['price']) && !isset($_POST['stock']) && !isset($_POST['category_id'])) { ?>
+                <?php 
+                
+                require_once('../unicode_reverse.php');
+                if(!isset($_POST['name']) && !isset($_POST['price']) && !isset($_POST['stock']) && !isset($_POST['category_id'])) { ?>
                     <form action="" method="post"  enctype="multipart/form-data">
-                    <div ng-init="controller.field.name = '<?php echo $row['name'] ?>';
+                    <div ng-init="controller.field.name = '<?php echo add_slash_squote($row['name']); ?>';
                     controller.field.price = <?php echo $row['price'] ?>;
-                    controller.field.description = '<?php echo $row['description'] ?>';
-                    controller.field.sdescription = '<?php echo $row['sdescription'] ?>';
+                    controller.field.description = '<?php echo add_slash_squote($row['description']); ?>';
+                    controller.field.sdescription = '<?php echo add_slash_squote($row['sdescription']); ?>';
                     controller.field.stock = <?php echo $row['stock'] ?>;
-                    controller.field.category_id = '<?php echo $row['category_id'] ?>';
+                    controller.field.category_id = '<?php echo add_slash_squote($row['category_id']); ?>';
                     controller.field.image = '<?php echo $row['image'] ?>';
                     "></div>
                     <div class="form-group">
@@ -94,7 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label>ราคา</label>
-                        <input type="number" name="price" class="form-control" id="price" placeholder="ราคา" ng-model="controller.field.price">
+                        <input type="number" step="0.01" name="price" class="form-control" id="price" placeholder="ราคา" ng-model="controller.field.price">
                     </div>
                     <div class="form-group">
                         <label>จำนวนในสต็อก</label>
@@ -124,8 +127,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>รายละเอียด แบบย่อ</label>
-                        <textarea type="text" name="sdescription" class="form-control" id="sdescription" placeholder="รายละเอียด" ng-model="controller.field.sdescription"></textarea>
+                        <label>บริษัท</label>
+                        <textarea type="text" name="sdescription" class="form-control" id="sdescription" placeholder="บริษัท" ng-model="controller.field.sdescription"></textarea>
                     </div>
                     <div class="form-group">
                         <label>รายละเอียด</label>
@@ -146,16 +149,16 @@
                     </form>
     
                         <?php } else  { 
-        
+                            require_once('../unicode_reverse.php');
                             $target_dir = "uploads/";
                             $newfilename= date('dmYHis').".jpg";
                             $target_file = $target_dir . basename($newfilename);
                             $uploadOk = 1;
                             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
                             // Check if image file is a actual image or fake image
-                            $name = $_POST['name'];
-                            $description = $_POST['description'];
-                            $sdescription = $_POST['sdescription'];
+                            $name = encode_single_quote($_POST['name']);
+                            $description = encode_single_quote($_POST['description']);
+                            $sdescription = encode_single_quote($_POST['sdescription']);
                             
                             $stock = $_POST['stock'];
                             $price = $_POST['price'];

@@ -35,8 +35,8 @@
                     <thead>
                         <tr>
                             <th>ลำดับที่</th>
-                            <th>สินค้า</th>
-                            <th>จำนวนสินค้าในสต็อก</th>
+                            <th colspan="2">สินค้า</th>
+                            <!-- <th>จำนวนสินค้าในสต็อก</th> -->
                             <th>จำนวนที่ต้องการสั่งซื้อ</th>
                             <th>ราคา (บาท)</th>
                             <th>ลบรายการ</th>
@@ -66,12 +66,12 @@
                                         }
 
                                         // check product stock 
-                                        $prodCheckQuery = $conn->query("SELECT stock FROM product WHERE id=".intval($productId));
-                                        if($prodCheck = $prodCheckQuery->fetch_assoc()){
-                                            if($product_list[$productId]->amount_purchase + 1 <= $prodCheck['stock']){
+                                        // $prodCheckQuery = $conn->query("SELECT stock FROM product WHERE id=".intval($productId));
+                                        // if($prodCheck = $prodCheckQuery->fetch_assoc()){
+                                        //     if($product_list[$productId]->amount_purchase + 1 <= $prodCheck['stock']){
                                                 $product_list[$productId]->amount_purchase += 1;
-                                            }
-                                        }
+                                        //     }
+                                        // }
                                         
                                         $conn->query("UPDATE `cart` SET `product_list`='"
                                         .encode_single_quote(unicode_decode(json_encode((object) $product_list))).
@@ -109,9 +109,12 @@
                                     ?>
                                         <tr>
                                             <td><?php echo ($i+1) ;?></td>
-                                            <td><a href="product_detail.php?prodId=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></td>
-                                            <td><?php echo $row['stock']; if($row['stock'] < 1){ $canPurchase = false; }?></td>
+                                            <td colspan="2"><a href="product_detail.php?prodId=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></td>
+                                            <!-- <td><?php echo $row['stock']; if($row['stock'] < 1){ $canPurchase = false; }?></td> -->
                                             <td>
+                                                <!-- <input type="number" price="<?php echo $row['price']; ?>" stock="<?php echo $row['stock']; ?>"
+                                                    prodId="<?php echo $row['id']; ?>" value="<?php echo $productInCart->amount_purchase; ?>" 
+                                                    name="" class="form-control" min="1" id="amount_<?php echo $row['id']; ?>" /> -->
                                                 <input type="number" price="<?php echo $row['price']; ?>" stock="<?php echo $row['stock']; ?>"
                                                     prodId="<?php echo $row['id']; ?>" value="<?php echo $productInCart->amount_purchase; ?>" 
                                                     name="" class="form-control" min="1" id="amount_<?php echo $row['id']; ?>" />
@@ -133,8 +136,8 @@
                                 ?>
                                 <tr>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="2"></td>
+                                    <!-- <td></td> -->
                                     <td style="text-align: right;">รวมทั้งสิ้น</td>
                                     <td style="text-align: center;">
                                         <input type="number" name="sum_all_price" id="sum_all_price" value="<?php echo $sum_all_price; ?>" class="form-control" readonly/>
@@ -142,7 +145,7 @@
                                     <td>บาท</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">ที่อยู่ในการจัดส่ง<br/></td>
+                                    <td colspan="3">ที่อยู่ในการจัดส่ง<br/></td>
                                     <td colspan="4">
                                         <textarea name="addressInput" id="addressInput" rows="3" class="form-control" required><?php 
                                             if($rowCart['address'] == null || $rowCart['address'] == ''){
@@ -157,7 +160,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">ชื่อผู้รับ<br/><span class="text-danger" style="font-size: 85%;">(โปรดใส่ชื่อจริง)</span></td>
+                                    <td colspan="3">ชื่อผู้รับ<br/><span class="text-danger" style="font-size: 85%;">(โปรดใส่ชื่อจริง)</span></td>
                                     <td colspan="4">
                                             <?php 
                                             $n='';
@@ -174,7 +177,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">อีเมลผู้รับ<br/><span class="text-danger" style="font-size: 85%;">(ระบบจะส่งอีเมล ไปพร้อมรหัสสั่งซื้อเมื่อทำรายการสำเร็จ)</span></td>
+                                    <td colspan="3">อีเมลผู้รับ<br/><span class="text-danger" style="font-size: 85%;">(ระบบจะส่งอีเมล ไปพร้อมรหัสสั่งซื้อเมื่อทำรายการสำเร็จ)</span></td>
                                     <td colspan="4">
                                             <?php 
                                             $m='';
@@ -191,7 +194,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">เบอร์โทรศัพท์ผู้รับ</td>
+                                    <td colspan="3">เบอร์โทรศัพท์ผู้รับ</td>
                                     <td colspan="4">
                                         <?php 
                                         $t='';
@@ -208,7 +211,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="text-align: center;">
+                                    <td colspan="3" style="text-align: center;">
                                         <label for="captchaInput"><img src="captcha.php" style="width: auto; height: 40px;"></label>
                                     </td>
                                     <td colspan="4">
@@ -232,8 +235,8 @@
                     <div class="col-sm-4 col-sm-offset-4 text-center" >
                         <span class="text-danger" style="font-size: 85%;">*** โปรดตรวจสอบรายละเอียดให้ถูกต้อง ***</span>
                         <div class="btn-group" role="group" aria-label="...">
-                            <input type="submit" value="บันทึกการเปลี่ยนแปลง" name="save_cart" id="save_cart" class="btn btn-info btn-lg" />
                             <input type="submit" value="ดำเนินการสั่งซื้อ" name="submit_purchase" id="submit_purchase_button" class="btn btn-success btn-lg " />
+                            <input type="submit" value="บันทึกการเปลี่ยนแปลง" name="save_cart" id="save_cart" class="btn btn-info btn-lg" />
                         </div>
                     </div>
                 <?php }else {
@@ -267,20 +270,20 @@
             var amount = numeral($(this).val()).value();
             var prodId = $(this).attr('prodId');
             var stock = numeral($(this).attr('stock')).value();
-            if(amount > stock){
-                alert('ไม่สามารถสั่งเกินจำนวนในสต็อกได้');
-                $(this).val(stock);
-                $("#sum_price_"+prodId).val(stock * price);
+            // if(amount > stock){
+            //     alert('ไม่สามารถสั่งเกินจำนวนในสต็อกได้');
+            //     $(this).val(stock);
+            //     $("#sum_price_"+prodId).val(stock * price);
 
-                productList[prodId].amount_purchase = stock;
+            //     productList[prodId].amount_purchase = stock;
 
-            }else {
+            // }else {
                 var s = amount * price;
                 $("#sum_price_"+prodId).val(s);
 
                 productList[prodId].amount_purchase = amount;
                 
-            }
+            // }
             $('#product_list').val(JSON.stringify(productList).escapeSpecialChars());
             // console.log(productList);
 

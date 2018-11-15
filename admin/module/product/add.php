@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group">
                         <label>ราคา</label>
-                        <input type="number" name="price" class="form-control" id="price" placeholder="ราคา" ng-model="controller.field.price">
+                        <input type="number" step="0.01" name="price" class="form-control" id="price" placeholder="ราคา" ng-model="controller.field.price">
                     </div>
                     <div class="form-group">
                         <label>จำนวนในสต็อก</label>
@@ -105,8 +105,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>รายละเอียด แบบย่อ</label>
-                        <textarea type="text" name="sdescription" class="form-control" id="description" placeholder="รายละเอียด" ng-model="controller.field.sdescription"></textarea>
+                        <label>บริษัท</label>
+                        <textarea type="text" name="sdescription" class="form-control" id="description" placeholder="บริษัท" ng-model="controller.field.sdescription"></textarea>
                     </div>
                     <div class="form-group">
                         <label>รายละเอียด</label>
@@ -124,41 +124,41 @@
                     </form>
 
                     <?php } else  { 
+                        require_once('../unicode_reverse.php');
+                        $target_dir = "uploads/";
+                        $newfilename= date('dmYHis').".jpg";                
+                        $target_file = $target_dir . basename($newfilename);
+                        $uploadOk = 1;
+                        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                        // Check if image file is a actual image or fake image
+                        $check = getimagesize($_FILES["image"]["tmp_name"]);
+                        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) { 
+                            $name = encode_single_quote($_POST['name']);
+                            $sdescription = encode_single_quote($_POST['description']);
+                            $description = encode_single_quote($_POST['sdescription']);
+                            $image =  basename($newfilename);
+                            $stock = (int)$_POST['stock'];
+                            $price = (int)$_POST['price'];
+                            $category_id = (int)$_POST['category_id'];
+                                
+                            $sql = "INSERT INTO `product` (`id`, `name`, `price`,`description`,`sdescription`, `image`, `stock`, `category_id`) VALUES (NULL, '$name', '$price','$description','$sdescription', '$image', '$stock', '$category_id');";
 
-                    $target_dir = "uploads/";
-                    $newfilename= date('dmYHis').".jpg";                
-                    $target_file = $target_dir . basename($newfilename);
-                    $uploadOk = 1;
-                    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-                    // Check if image file is a actual image or fake image
-                    $check = getimagesize($_FILES["image"]["tmp_name"]);
-                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) { 
-                        $name = $_POST['name'];
-                        $sdescription = $_POST['description'];
-                        $description = $_POST['sdescription'];
-                        $image =  basename($newfilename);
-                        $stock = (int)$_POST['stock'];
-                        $price = (int)$_POST['price'];
-                        $category_id = (int)$_POST['category_id'];
-                            
-                        $sql = "INSERT INTO `product` (`id`, `name`, `price`,`description`,`sdescription`, `image`, `stock`, `category_id`) VALUES (NULL, '$name', '$price','$description','$sdescription', '$image', '$stock', '$category_id');";
-
-                        $result = $conn->query($sql);
-                        if($result) {
-                            $resultTxt = "สำเร็จ";
-                        }else {
+                            $result = $conn->query($sql);
+                            if($result) {
+                                $resultTxt = "สำเร็จ";
+                            }else {
+                                $resultTxt = "ไม่สำเร็จ";
+                            }
+                        } else {
                             $resultTxt = "ไม่สำเร็จ";
                         }
-                    } else {
-                        $resultTxt = "ไม่สำเร็จ";
-                    }
-                        
-                    ?>
+                            
+                        ?>
 
-                    <div class="is-center">
-                        <h4>เพิ่มสินค้า <?php echo $resultTxt; ?> </h4>
-                          <a href="index.php?module=product&mode=manage">คลิกเพื่อกลับไปยังหน้าจัดการ</a>
-                    </div>
+                        <div class="is-center">
+                            <h4>เพิ่มสินค้า <?php echo $resultTxt; ?> </h4>
+                            <a href="index.php?module=product&mode=manage">คลิกเพื่อกลับไปยังหน้าจัดการ</a>
+                        </div>
 
                     <?php }  ?>
 
