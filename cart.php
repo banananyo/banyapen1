@@ -86,8 +86,6 @@
                                         $conn->query("INSERT INTO `cart`(`member_id`, `product_list`) VALUES(".$_SESSION['login_user']['id'].", '".encode_single_quote(unicode_decode(json_encode($first_product)))."')");
                                     }
                                 }
-                            } else {
-                                print_r($_POST);
                             }
 
                             $cartShowQuery = $conn->query("SELECT * FROM `cart` WHERE `member_id`=".$_SESSION['login_user']['id']);
