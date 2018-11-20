@@ -57,24 +57,17 @@
                 if($num_rows <= 0) {
                   echo '<script>alert("ไม่พบรหัสสั่งซื้อที่ท่านแจ้ง! กรุณาตรวจสอบให้ดีอีกครั้ง");</script>';
                 } else {
-                  $uploadOk = false;
-                  $types = array('image/jpeg', 'image/jpg', 'image/png');
-                  if (in_array($file_upload['type'], $types)) {
-                    $target_dir = "admin/uploads/payment_confirm/";
-                    $target_file = utf8_decode($target_dir . time().'.jpg');
-                    $uploadOk = move_uploaded_file($file_upload["tmp_name"], $target_file);
-                    if($uploadOk){
-                      $sql = "INSERT INTO `payment_confirm`(`orders_ref`, `bank`, `payment_date`, `payment_time`, `name`, `tel`, `email`, `price`, `slip_url`, `text_remark`, `status`) ".
-                      "VALUES ('$inputOrderRef', '$bank', '$inputDate', '$inputTime', '$name', '$tel', '$email', '$price', '$target_file', '$remark', 'WFC')";
-                      $res = $conn->query($sql);
-                      if($res) {
-                        echo '<script>alert("แจ้งโอนสำเร็จแล้ว กรุณารอรับอีเมลการยืนยันจากบ้านยาเป็นหนึ่ง");</script>';
-                      } else {
-                        echo '<script>alert("การอัพโหลดไฟล์สลิปไม่สำเร็จ รายการแจ้งโอนถูกยกเลิก!!!");</script>';
-                      }
+                  include('utils/image_upload.php');
+                  $uploadOk = upload("admin/uploads/payment_confirm/", $file_upload);
+                  if($uploadOk != null){
+                    $sql = "INSERT INTO `payment_confirm`(`orders_ref`, `bank`, `payment_date`, `payment_time`, `name`, `tel`, `email`, `price`, `slip_url`, `text_remark`, `status`) ".
+                    "VALUES ('$inputOrderRef', '$bank', '$inputDate', '$inputTime', '$name', '$tel', '$email', '$price', '$target_file', '$remark', 'WFC')";
+                    $res = $conn->query($sql);
+                    if($res) {
+                      echo '<script>alert("แจ้งโอนสำเร็จแล้ว กรุณารอรับอีเมลการยืนยันจากบ้านยาเป็นหนึ่ง");</script>';
+                    } else {
+                      echo '<script>alert("การอัพโหลดไฟล์สลิปไม่สำเร็จ รายการแจ้งโอนถูกยกเลิก!!!");</script>';
                     }
-                  } else {
-                    echo '<script>alert("โปรดใช้ไฟล์ประเภท .png .jpg หรือ .jpeg เท่านั้น");</script>';
                   }
                 }
                 unset($_POST);

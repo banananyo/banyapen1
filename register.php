@@ -143,28 +143,34 @@ body, html {
 <?php 
     if(isset($_POST['register'])){
         require_once('connect.php');
-
         $name = $_POST['name'];
         $username = $_POST['username'];
         $password = md5($_POST['password']);
         $address = $_POST['address'];
         $tel = $_POST['tel'];
         $email = $_POST['email'];
+        $certificate_1 = $_FILES['certificate_1'];
             
         // $avartar=$_POST['avartar'];
         $sqlString = "SELECT TRUE FROM `member` WHERE `username`='$username' OR `email`='$email'";
         $checkUserExists = $conn->query($sqlString);
         if($checkUserExists->fetch_assoc()){
-            echo "<script type='text/javascript'>alert('ไม่สามารถใช้ชื่อผู้ใช้หรืออีเมนี้ได้');</script>";
+            echo "<script type='text/javascript'>alert('ไม่สามารถใช้ชื่อผู้ใช้หรืออีเมลล์นี้ได้');</script>";
         } else {
-            // status = 0 -> non approved
-            // status = 1 -> approved
-            $registered = $conn->query("INSERT INTO `member`(`username`, `password`, `email`, `name`, `address`, `tel`, `image`, `level`, `status`) ".
-            "VALUES ('$username', '$password', '$email', '$name', '$address', '$tel', '', 1, 0)");
-            if($registered) {
-                echo "<script type='text/javascript'>alert('ดำเนินการสมัครสมาชิกเรียบร้อย กรุณารอการยืนยันตัวตนจากแอดมินค่ะ');window.location.href=window.location.href;</script>";
+            include('utils/image_upload.php');
+            $cer_1_file = upload("admin/uploads/certificate/", $certificate_1);
+            if ($cer_1_file != null && $cer_2_file != null) {
+                // status = 0 -> non approved
+                // status = 1 -> approved
+                $registered = $conn->query("INSERT INTO `member`(`username`, `password`, `email`, `name`, `address`, `tel`, `image`, `level`, `status`, `certificate_1`) ".
+                "VALUES ('$username', '$password', '$email', '$name', '$address', '$tel', '', 1, 0, '$cer_1_file')");
+                if($registered) {
+                    echo "<script type='text/javascript'>alert('ดำเนินการสมัครสมาชิกเรียบร้อย กรุณารอการยืนยันตัวตนจากแอดมินค่ะ');window.location.href=window.location.href;</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('เกิดข้อผิดพลาด โปรดแจ้งแอดมิน');window.location.href=window.location.href;</script>";
+                }
             } else {
-                echo "<script type='text/javascript'>alert('เกิดข้อผิดพลาด โปรดแจ้งแอดมิน');window.location.href=window.location.href;</script>";
+                echo '<script>alert("การสมัครไม่สำเร็จ ไม่สามารถอัพโหลดรูปภาพได้ กรุณาตรวจสอบอีกครั้ง หรือติดต่อเจ้าหน้าที่");</script>';
             }
         }
         
@@ -174,9 +180,10 @@ body, html {
  <div class="container">
         <div class="card card-container">
             
-            <div align="center"><img src="images/logo.jpg" class="img-responsive"/></div>
+            <div align="center"><img src="images/logo_new2.jpg" class="img-responsive"/></div>
+            <h2>สมัครสมาชิก</h2>
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" action="" method="POST" onsubmit="return validateForm()" id="registerForm">
+            <form class="form-signin" action="" method="POST" onsubmit="return validateForm()" id="registerForm" enctype="multipart/form-data">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="username" name="username" class="form-control" placeholder="ชื่อผู้ใช้ (ใช้เพื่อ login)" required autofocus>
                 <input type="password" id="password" name="password" class="form-control" placeholder="รหัสผ่าน" required>
@@ -185,6 +192,11 @@ body, html {
                 <input type="text" id="email" name="email" class="form-control" placeholder="อีเมล" required>
                 <input type="text" id="tel" name="tel" class="form-control" placeholder="เบอร์โทรศัพท์" required>
                 <textarea id="address" name="address" class="form-control" placeholder="ที่อยู่" required style="margin-bottom: 10px;"></textarea>
+
+                <div class="input-group">
+                    <label for="certificate_1"><b>อัพโหลดไฟล์รูป</b><br/>ใบอนุญาตขายยา, ใบประกอบวิชาชีพ, ใบอนุญาตประกอบกิจการสถานพยาบาล, ใบประกอบโรคศิลปะ (อย่างใดอย่างหนึ่ง)</label>
+                    <input type="file" id="certificate_1" name="certificate_1" class="form-control" style="height: 45px; margin-bottom: 10px" placeholder="ใบอนุญาตขายยา" required />
+                </div>
                 
                 <!-- <input type="file" id="avartar" name="avartar" class="form-control" placeholder="รูป" required> -->
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -214,7 +226,8 @@ body, html {
             form.email = document.forms["registerForm"]["email"].value;
             form.tel = document.forms["registerForm"]["tel"].value;
             form.address = document.forms["registerForm"]["address"].value;
-            // console.log(form);
+            form.certificate_1 = document.forms["registerForm"]["certificate_1"].value;
+            console.log(form);
             Object.values(form).some(function(item) {
                 console.log(item);
                 if(isNullOrEmpty(item)) {

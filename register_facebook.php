@@ -149,20 +149,28 @@ body, html {
         $address=$_POST['address'];
         $tel=$_POST['tel'];
         $facebook_id = $_POST['facebook_id'];
+        $certificate_1 = $_FILES['certificate_1'];
+        $certificate_2 = $_FILES['certificate_2'];
         // $avartar=$_POST['avartar'];
         $sqlString = "SELECT TRUE FROM `member` WHERE `facebook_token`='$facebook_id' OR `email`='$email'";
         $checkUserExists = $conn->query($sqlString);
         if($checkUserExists->fetch_assoc()){
             echo "<script type='text/javascript'>alert('ไม่สามารถใช้ชื่อผู้ใช้หรืออีเมลนี้ได้');</script>";
         } else {
-            // status = 0 -> non approved
-            // status = 1 -> approved
-            $registered = $conn->query("INSERT INTO `member`(`username`, `email`, `name`, `address`, `tel`, `image`, `level`, `status`, `facebook_token`) ".
-            "VALUES ('$facebook_id', '$email', '$name', '$address', '$tel', '', 1, 0, '$facebook_id')");
-            if($registered) {
-                echo "<script type='text/javascript'>alert('ดำเนินการสมัครสมาชิกเรียบร้อย กรุณารอการยืนยันตัวตนจากแอดมินค่ะ');window.location.href='home.php';</script>";
+            include('utils/image_upload.php');
+            $cer_1_file = upload("admin/uploads/certificate/", $certificate_1);
+            if ($cer_1_file != null && $cer_2_file != null) {
+                // status = 0 -> non approved
+                // status = 1 -> approved
+                $registered = $conn->query("INSERT INTO `member`(`username`, `email`, `name`, `address`, `tel`, `image`, `level`, `status`, `facebook_token`, `certificate_1`) ".
+                "VALUES ('$facebook_id', '$email', '$name', '$address', '$tel', '', 1, 0, '$facebook_id', '$cer_1_file')");
+                if($registered) {
+                    echo "<script type='text/javascript'>alert('ดำเนินการสมัครสมาชิกเรียบร้อย กรุณารอการยืนยันตัวตนจากแอดมินค่ะ');window.location.href='home.php';</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('เกิดข้อผิดพลาด โปรดแจ้งแอดมิน');window.location.href='index.php';</script>";
+                }
             } else {
-                echo "<script type='text/javascript'>alert('เกิดข้อผิดพลาด โปรดแจ้งแอดมิน');window.location.href='index.php';</script>";
+                echo '<script>alert("การสมัครไม่สำเร็จ ไม่สามารถอัพโหลดรูปภาพได้ กรุณาตรวจสอบอีกครั้ง หรือติดต่อเจ้าหน้าที่");</script>';
             }
         }
         
@@ -172,16 +180,23 @@ body, html {
  <div class="container">
         <div class="card card-container">
             
-            <div align="center"><img src="images/logo.jpg" class="img-responsive"/></div>
+            <div align="center"><img src="images/logo_new2.jpg" class="img-responsive"/></div>
+            <h2>สมัครสมาชิก</h2>
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" action="" method="POST" onsubmit="return validateForm()" id="registerForm">
                 <span id="reauth-email" class="reauth-email"></span>
-                <input type="hidden" id="facebook_id" name="facebook_id" class="form-control" placeholder="facebokk_id">
+                <input type="hidden" id="facebook_id" name="facebook_id" class="form-control" placeholder="facebook_id">
                 <input type="text" id="name" name="name" class="form-control" placeholder="ชื่อ - สกุล" required>
                 <input type="text" id="email" name="email" class="form-control" placeholder="อีเมล" required>
                 <input type="text" id="tel" name="tel" class="form-control" placeholder="เบอร์โทรศัพท์" required>
                 <textarea id="address" name="address" class="form-control" placeholder="ที่อยู่" required style="margin-bottom: 10px;"></textarea>
                 
+                <div class="input-group">
+                    <label for="certificate_1"><b>อัพโหลดไฟล์รูป</b><br/>ใบอนุญาตขายยา, ใบประกอบวิชาชีพ, ใบอนุญาตประกอบกิจการสถานพยาบาล, ใบประกอบโรคศิลปะ (อย่างใดอย่างหนึ่ง)</label>
+                    <input type="file" id="certificate_1" name="certificate_1" class="form-control" style="height: 45px; margin-bottom: 10px" placeholder="ใบอนุญาตขายยา" required />
+                </div>
+                
+
                 <!-- <input type="file" id="avartar" name="avartar" class="form-control" placeholder="รูป" required> -->
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
