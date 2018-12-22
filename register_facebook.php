@@ -150,7 +150,7 @@ body, html {
         $tel=$_POST['tel'];
         $facebook_id = $_POST['facebook_id'];
         $certificate_1 = $_FILES['certificate_1'];
-        $certificate_2 = $_FILES['certificate_2'];
+        // $certificate_2 = $_FILES['certificate_2'];
         // $avartar=$_POST['avartar'];
         $sqlString = "SELECT TRUE FROM `member` WHERE `facebook_token`='$facebook_id' OR `email`='$email'";
         $checkUserExists = $conn->query($sqlString);
@@ -159,7 +159,7 @@ body, html {
         } else {
             include('utils/image_upload.php');
             $cer_1_file = upload("admin/uploads/certificate/", $certificate_1);
-            if ($cer_1_file != null && $cer_2_file != null) {
+            if ($cer_1_file != null) {
                 // status = 0 -> non approved
                 // status = 1 -> approved
                 $registered = $conn->query("INSERT INTO `member`(`username`, `email`, `name`, `address`, `tel`, `image`, `level`, `status`, `facebook_token`, `certificate_1`) ".
@@ -183,7 +183,7 @@ body, html {
             <div align="center"><img src="images/logo_new2.jpg" class="img-responsive"/></div>
             <h2>สมัครสมาชิก</h2>
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" action="" method="POST" onsubmit="return validateForm()" id="registerForm">
+            <form class="form-signin" action="" method="POST" onsubmit="return validateForm()" id="registerForm" enctype="multipart/form-data">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="hidden" id="facebook_id" name="facebook_id" class="form-control" placeholder="facebook_id">
                 <input type="text" id="name" name="name" class="form-control" placeholder="ชื่อ - สกุล" required>

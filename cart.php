@@ -47,6 +47,11 @@
                             require_once('connect.php');
                             require_once('unicode_reverse.php');
                             if(isset($_POST['prod_id'])){
+                                if (isset($_POST['quantity']) && $_POST['quantity'] > 0) {
+                                    $quantity = $_POST['quantity'];
+                                } else {
+                                    $quantity = 1;
+                                }
                                 $productId = $_POST['prod_id'];
                                 $pq = $conn->query("SELECT price, name FROM product WHERE id=".$productId);
                                 if($prodGet = $pq->fetch_assoc()){
@@ -69,7 +74,7 @@
                                         // $prodCheckQuery = $conn->query("SELECT stock FROM product WHERE id=".intval($productId));
                                         // if($prodCheck = $prodCheckQuery->fetch_assoc()){
                                         //     if($product_list[$productId]->amount_purchase + 1 <= $prodCheck['stock']){
-                                                $product_list[$productId]->amount_purchase += 1;
+                                                $product_list[$productId]->amount_purchase += $quantity;
                                         //     }
                                         // }
                                         
@@ -80,7 +85,7 @@
                                     }   
                                     // if user init cart
                                     else {
-                                        $first_product[$productId]['amount_purchase'] = 1;
+                                        $first_product[$productId]['amount_purchase'] = $quantity;
                                         $first_product[$productId]['name'] = $prodGet['name'];
                                         $first_product[$productId]['price'] =  $prodGet['price'];
                                         $conn->query("INSERT INTO `cart`(`member_id`, `product_list`) VALUES(".$_SESSION['login_user']['id'].", '".encode_single_quote(unicode_decode(json_encode($first_product)))."')");
@@ -110,9 +115,7 @@
                                             <td colspan="2"><a href="product_detail.php?prodId=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></td>
                                             <!-- <td><?php echo $row['stock']; if($row['stock'] < 1){ $canPurchase = false; }?></td> -->
                                             <td>
-                                                <!-- <input type="number" price="<?php echo $row['price']; ?>" stock="<?php echo $row['stock']; ?>"
-                                                    prodId="<?php echo $row['id']; ?>" value="<?php echo $productInCart->amount_purchase; ?>" 
-                                                    name="" class="form-control" min="1" id="amount_<?php echo $row['id']; ?>" /> -->
+      
                                                 <input type="number" price="<?php echo $row['price']; ?>" stock="<?php echo $row['stock']; ?>"
                                                     prodId="<?php echo $row['id']; ?>" value="<?php echo $productInCart->amount_purchase; ?>" 
                                                     name="" class="form-control" min="1" id="amount_<?php echo $row['id']; ?>" />

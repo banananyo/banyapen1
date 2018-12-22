@@ -58,7 +58,9 @@
 							<div class="col-lg-12">
 								<input type="hidden" name="prod_id" value="<?php echo $row['id']; ?>" />
 								<input type="hidden" name="add_to_cart" />
-								<button type="submit" class="btn btn-warning btn-lg" 
+								<input type="number" class="form-control" style="width: 80px; display: inline-block" name="quantity" value="1" min="1"/>
+								<input type="text" class="form-control" style="width: 60px; display: inline-block" value="ชิ้น" readOnly/>
+								<button type="submit" class="btn btn-warning" 
 									<?php echo ($row['stock']>=1 ? '':'disabled'); ?>>
 									หยิบใส่ตะกร้า <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 								</button>
